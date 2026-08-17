@@ -1,0 +1,217 @@
+{
+  "name": "prompt-enhancer",
+  "version": "1.0.0",
+  "description": "Local-first AI prompt enhancer. Select any text, press a shortcut, and get a clearer, more effective prompt back — powered by a bundled llama.cpp server running MiniCPM-V offline.",
+  "author": "Nishant Patel",
+  "license": "MIT",
+  "homepage": "https://github.com/Itsnishant4/prompt-enhancer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Itsnishant4/prompt-enhancer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Itsnishant4/prompt-enhancer/issues"
+  },
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "dev:renderer": "vite",
+    "dev:main": "electron-vite dev",
+    "build": "electron-vite build && electron-builder",
+    "build:win": "electron-vite build && electron-builder --win --x64",
+    "build:win:dir": "electron-vite build && electron-builder --win --x64 --dir",
+    "build:win:portable": "electron-vite build && electron-builder --win portable --x64",
+    "build:mac": "electron-vite build && electron-builder --mac",
+    "build:all": "electron-vite build && electron-builder --win --mac --x64",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "rebuild": "electron-rebuild -f",
+    "postinstall": "electron-builder install-app-deps",
+    "build:renderer": "electron-vite build --renderer",
+    "clean": "rimraf dist release out",
+    "dist:win": "npm run clean && npm run build:win",
+    "dist:win:portable": "npm run clean && npm run build:win:portable",
+    "dist:mac": "npm run clean && npm run build:mac",
+    "dist:all": "npm run clean && npm run build:all"
+  },
+  "dependencies": {
+    "@nut-tree-fork/nut-js": "^4.2.6",
+    "better-sqlite3": "^11.8.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.0",
+    "axios": "^1.6.0",
+    "clsx": "^2.1.0",
+    "concurrently": "^8.2.0",
+    "electron": "^32.0.0",
+    "electron-builder": "^25.1.0",
+    "electron-rebuild": "^3.2.0",
+    "electron-store": "^10.0.0",
+    "electron-vite": "^2.0.0",
+    "eslint": "^8.50.0",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^0.300.0",
+    "postcss": "^8.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": [
+    "darwin",
+    "win32"
+  ],
+  "build": {
+    "appId": "com.promptenhancer.app",
+    "productName": "Prompt Enhancer",
+    "directories": {
+      "output": "release",
+      "buildResources": "resources"
+    },
+    "files": [
+      "dist/main/**/*",
+      "dist/preload/**/*",
+      "dist/renderer/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/icon.png",
+        "to": "resources/icon.png"
+      }
+    ],
+    "asar": true,
+    "compression": "maximum",
+    "win": {
+      "icon": "resources/icon.ico",
+      "extraResources": [
+        {
+          "from": "resources/bin/win32-${arch}",
+          "to": "resources/bin",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Setup-${version}-x64.${ext}",
+      "signAndEditExecutable": false,
+      "verifyUpdateCodeSignature": false,
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "installerIcon": "resources/icon.ico",
+      "uninstallerIcon": "resources/icon.ico",
+      "installerHeaderIcon": "resources/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Prompt Enhancer",
+      "uninstallDisplayName": "Prompt Enhancer ${version}",
+      "include": "resources/installer.nsh",
+      "runAfterFinish": true,
+      "guid": "9A8B7C6D-5E4F-3A2B-1C0D-9E8F7A6B5C4D",
+      "warningsAsErrors": false,
+      "deleteAppDataOnUninstall": false,
+      "installerLanguages": [
+        "en_US"
+      ]
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}-x64.${ext}",
+      "splashImage": "resources/icon.png"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "resources/entitlements.mac.plist",
+      "entitlementsInherit": "resources/entitlements.mac.plist",
+      "extraResources": [
+        {
+          "from": "resources/bin/darwin-arm64",
+          "to": "resources/bin/darwin-arm64",
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "resources/bin/darwin-x64",
+          "to": "resources/bin/darwin-x64",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64",
+            "universal"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64",
+            "universal"
+          ]
+        }
+      ]
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Itsnishant4",
+      "repo": "prompt-enhancer",
+      "private": false,
+      "releaseType": "release"
+    }
+  },
+  "pnpm": {
+    "overrides": {
+      "node-gyp": "^10.2.0"
+    },
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "electron",
+      "esbuild",
+      "lzma-native"
+    ]
+  },
+  "allowScripts": {
+    "node-llama-cpp": true
+  }
+}
