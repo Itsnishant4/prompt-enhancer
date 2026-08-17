@@ -23,7 +23,7 @@
 
 @layer components {
   .glass {
-    @apply bg-white/40 dark:bg-slate-900/30 backdrop-blur-2xl border border-slate-200/30 dark:border-slate-800/40;
+    @apply bg-white/80 dark:bg-slate-900/70 border border-slate-200/30 dark:border-slate-800/40;
   }
   
   .glass-card {

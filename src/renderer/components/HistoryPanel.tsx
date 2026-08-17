@@ -5,7 +5,6 @@ import { useHistory } from '../hooks/useHistory';
 import { useEnhance } from '../hooks/useEnhance';
 import type { HistoryEntry } from '@shared/types';
 import { useToast } from './Toast';
-import { motion, AnimatePresence } from 'framer-motion';
 
 export function HistoryPanel() {
   const { history, loading, hasMore, searchQuery, setSearchQuery, loadMore, deleteEntry, clearHistory, refresh } = useHistory();
@@ -89,17 +88,9 @@ export function HistoryPanel() {
               <Trash2 size={12} /> Clear All
             </button>
           </div>
-          <AnimatePresence initial={false}>
-            {history.map((entry) => (
-              <motion.div
-                key={entry.id}
-                layout
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, height: 0, marginTop: 0, marginBottom: 0, overflow: 'hidden' }}
-                transition={{ type: "spring", stiffness: 400, damping: 35 }}
-              >
+          {history.map((entry) => (
                 <HistoryEntryCard
+                  key={entry.id}
                   entry={entry}
                   isExpanded={expandedId === entry.id}
                   onToggle={() => setExpandedId(expandedId === entry.id ? null : entry.id)}
@@ -111,9 +102,7 @@ export function HistoryPanel() {
                   copying={copyingId === entry.id}
                   enhancing={enhancing}
                 />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          ))}
           
           {hasMore && (
             <button

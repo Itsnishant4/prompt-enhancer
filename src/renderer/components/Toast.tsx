@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
 import { clsx } from 'clsx';
-import { motion, AnimatePresence } from 'framer-motion';
 
 type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -96,21 +95,11 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: string)
 export function ToastContainer({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: string) => void }) {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 w-96 pointer-events-none">
-      <AnimatePresence>
-        {toasts.map(toast => (
-          <motion.div
-            key={toast.id}
-            layout
-            initial={{ opacity: 0, y: 30, scale: 0.92, x: 20 }}
-            animate={{ opacity: 1, y: 0, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.85, x: 80, transition: { duration: 0.15 } }}
-            transition={{ type: "spring", stiffness: 380, damping: 26 }}
-            className="pointer-events-auto"
-          >
-            <ToastItem toast={toast} onDismiss={onDismiss} />
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      {toasts.map(toast => (
+        <div key={toast.id} className="pointer-events-auto">
+          <ToastItem toast={toast} onDismiss={onDismiss} />
+        </div>
+      ))}
     </div>
   );
 }

@@ -5,7 +5,6 @@ import { HistoryPanel } from './components/HistoryPanel';
 import { DownloadGate } from './components/DownloadGate';
 import { ToastContainer, useToast } from './components/Toast';
 import { windowControls } from './hooks/useWindowControls';
-import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
 
 import { useSettings } from './hooks/useSettings';
@@ -76,33 +75,23 @@ export default function App() {
       />
       
       <main className="flex-1 overflow-hidden relative">
-        <AnimatePresence mode="wait">
-          {activeTab === 'settings' ? (
-            <motion.div
-              key="settings"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 overflow-y-auto overflow-x-hidden pt-8 px-8 custom-scrollbar pb-24"
-            >
-              <SettingsPanel platform={platform} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="history"
-              initial={{ opacity: 0, filter: 'blur(4px)', y: 4 }}
-              animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, filter: 'blur(4px)', y: -4 }}
-              transition={{ duration: 0.15, ease: "easeOut" }}
-              className="absolute inset-0 overflow-y-auto"
-            >
-              <div className="max-w-2xl mx-auto p-8 pb-16">
-                <HistoryPanel />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {activeTab === 'settings' ? (
+          <div
+            key="settings"
+            className="absolute inset-0 overflow-y-auto overflow-x-hidden pt-8 px-8 custom-scrollbar pb-24"
+          >
+            <SettingsPanel platform={platform} />
+          </div>
+        ) : (
+          <div
+            key="history"
+            className="absolute inset-0 overflow-y-auto"
+          >
+            <div className="max-w-2xl mx-auto p-8 pb-16">
+              <HistoryPanel />
+            </div>
+          </div>
+        )}
       </main>
       
       <ToastContainer toasts={toasts} onDismiss={dismiss} />
@@ -139,7 +128,7 @@ function TitleBar({
 
   return (
     <div 
-      className="flex items-center justify-between h-14 border-b border-slate-100 dark:border-slate-900/50 select-none bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-50 relative"
+      className="flex items-center justify-between h-14 border-b border-slate-100 dark:border-slate-900/50 select-none bg-white/95 dark:bg-slate-950/95 z-50 relative"
       style={dragStyle}
     >
       {/* Spacer for Traffic Lights (Title removed) */}

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Save, Loader2, Keyboard, Cpu, Download, CheckCircle2, AlertCircle, StopCircle } from 'lucide-react';
 import type { Settings, LlamaServerStatus } from '@shared/types';
 import { DEFAULT_SETTINGS } from '@shared/constants';
-import { motion, Variants } from 'framer-motion';
 
 export function SettingsPanel({ platform }: { platform?: string }) {
   const [loading, setLoading] = useState(false);
@@ -73,39 +72,17 @@ export function SettingsPanel({ platform }: { platform?: string }) {
     );
   }
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.02 }
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 10 },
-    show: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring", stiffness: 300, damping: 30 }
-    }
-  };
-
   const isMac = platform === 'darwin';
 
   return (
-    <motion.div 
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-      className="max-w-xl mx-auto space-y-10"
-    >
-      <motion.div variants={itemVariants} className="text-center pb-2">
+    <div className="max-w-xl mx-auto space-y-10">
+      <div className="text-center pb-2">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Preferences</h1>
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Configure your local AI model and global shortcut.</p>
-      </motion.div>
+      </div>
 
       {/* Model Section */}
-      <motion.section variants={itemVariants} className="space-y-6">
+      <section className="space-y-6">
         <div className="flex items-center gap-3 border-b border-slate-200/50 dark:border-slate-800/50 pb-2">
           <Cpu size={16} className="text-slate-400" />
           <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-200 tracking-wide uppercase">AI Model</h2>
@@ -179,12 +156,12 @@ export function SettingsPanel({ platform }: { platform?: string }) {
             </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
 
 
       {/* System Prompt */}
-      <motion.section variants={itemVariants} className="space-y-4">
+      <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-slate-200/50 dark:border-slate-800/50 pb-2">
           <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-200 tracking-wide uppercase">System Prompt</h2>
         </div>
@@ -194,10 +171,10 @@ export function SettingsPanel({ platform }: { platform?: string }) {
           className="textarea-field-minimal  text-xs leading-relaxed min-h-[120px]"
           placeholder="Enter system prompt..."
         />
-      </motion.section>
+      </section>
 
       {/* Behavior */}
-      <motion.section variants={itemVariants} className="space-y-4">
+      <section className="space-y-4">
         <div className="flex items-center gap-3 border-b border-slate-200/50 dark:border-slate-800/50 pb-2">
           <Keyboard size={16} className="text-slate-400" />
           <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-200 tracking-wide uppercase">System</h2>
@@ -243,10 +220,10 @@ export function SettingsPanel({ platform }: { platform?: string }) {
             </label>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Save Button */}
-      <motion.div variants={itemVariants} className="pt-8 flex justify-center pb-8">
+      <div className="pt-8 flex justify-center pb-8">
         <button
           onClick={handleSave}
           disabled={saving}
@@ -255,7 +232,7 @@ export function SettingsPanel({ platform }: { platform?: string }) {
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}
           Save Preferences
         </button>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Download, Loader2, AlertCircle, Cpu } from 'lucide-react';
 import { DEFAULT_SETTINGS } from '@shared/constants';
-import { motion } from 'framer-motion';
 
 interface DownloadGateProps {
   onComplete: () => void;
@@ -69,12 +68,7 @@ export function DownloadGate({ onComplete }: DownloadGateProps) {
 
   return (
     <div className="h-screen bg-white dark:bg-[#0a0a0f] text-slate-900 dark:text-slate-100 flex flex-col items-center justify-center px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-        className="w-full max-w-md flex flex-col items-center text-center"
-      >
+      <div className="w-full max-w-md flex flex-col items-center text-center">
         <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-6">
           <Cpu size={28} className="text-indigo-500" />
         </div>
@@ -112,11 +106,7 @@ export function DownloadGate({ onComplete }: DownloadGateProps) {
                 <span className="font-medium tabular-nums">{progress}%</span>
               </div>
               <div className="h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-indigo-500 rounded-full"
-                  animate={{ width: `${progress}%` }}
-                  transition={{ duration: 0.3, ease: 'easeOut' }}
-                />
+                <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${progress}%` }} />
               </div>
               {phase === 'downloading' && (
                 <p className="text-[11px] text-slate-400">First download takes a few minutes depending on your connection.</p>
@@ -140,7 +130,7 @@ export function DownloadGate({ onComplete }: DownloadGateProps) {
             </div>
           )}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
