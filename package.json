@@ -158,9 +158,7 @@
       "gatekeeperAssess": false,
       "entitlements": "resources/entitlements.mac.plist",
       "entitlementsInherit": "resources/entitlements.mac.plist",
-      "universal": {
-        "x64ArchFiles": "resources/bin/**"
-      },
+      "x64ArchFiles": "resources/bin/**",
       "extraResources": [
         {
           "from": "resources/bin/darwin-arm64",
