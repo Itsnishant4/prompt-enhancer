@@ -62,11 +62,11 @@ jobs:
         with:
           name: ${{ matrix.platform }}-${{ matrix.arch }}
           path: |
-            release/**/*.exe
-            release/**/*.dmg
-            release/**/*.zip
-            release/**/*.yml
-            release/**/*.blockmap
+            release/*.exe
+            release/*.dmg
+            release/*.zip
+            release/*.yml
+            release/*.blockmap
           if-no-files-found: error
 
   release:
@@ -89,10 +89,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            release-artifacts/**/*.exe
-            release-artifacts/**/*.dmg
-            release-artifacts/**/*.zip
-            release-artifacts/**/*.yml
-            release-artifacts/**/*.blockmap
+            release-artifacts/*.exe
+            release-artifacts/*.dmg
+            release-artifacts/*.zip
+            release-artifacts/*.yml
+            release-artifacts/*.blockmap
           draft: false
           prerelease: false
