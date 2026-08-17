@@ -102,7 +102,7 @@
       "extraResources": [
         {
           "from": "resources/bin/win32-${arch}",
-          "to": "resources/bin",
+          "to": "resources/bin/win32-${arch}",
           "filter": [
             "**/*"
           ]
@@ -112,17 +112,19 @@
         {
           "target": "nsis",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         },
         {
           "target": "portable",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         }
       ],
-      "artifactName": "${productName}-Setup-${version}-x64.${ext}",
+      "artifactName": "${productName}-Setup-${version}-${arch}.${ext}",
       "signAndEditExecutable": false,
       "verifyUpdateCodeSignature": false,
       "requestedExecutionLevel": "asInvoker"
@@ -149,7 +151,7 @@
       ]
     },
     "portable": {
-      "artifactName": "${productName}-Portable-${version}-x64.${ext}",
+      "artifactName": "${productName}-Portable-${version}-${arch}.${ext}",
       "splashImage": "resources/icon.png"
     },
     "mac": {
@@ -158,18 +160,10 @@
       "gatekeeperAssess": false,
       "entitlements": "resources/entitlements.mac.plist",
       "entitlementsInherit": "resources/entitlements.mac.plist",
-      "x64ArchFiles": "resources/bin/**",
       "extraResources": [
         {
-          "from": "resources/bin/darwin-arm64",
-          "to": "resources/bin/darwin-arm64",
-          "filter": [
-            "**/*"
-          ]
-        },
-        {
-          "from": "resources/bin/darwin-x64",
-          "to": "resources/bin/darwin-x64",
+          "from": "resources/bin/darwin-${arch}",
+          "to": "resources/bin/darwin-${arch}",
           "filter": [
             "**/*"
           ]
@@ -180,16 +174,14 @@
           "target": "dmg",
           "arch": [
             "x64",
-            "arm64",
-            "universal"
+            "arm64"
           ]
         },
         {
           "target": "zip",
           "arch": [
             "x64",
-            "arm64",
-            "universal"
+            "arm64"
           ]
         }
       ]

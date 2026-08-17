@@ -33,12 +33,6 @@ function getResourcesPath(): string {
 function getBinaryDir(): string {
   const platform = process.platform === 'win32' ? 'win32' : 'darwin';
   const arch = process.arch;
-  if (app.isPackaged) {
-    if (platform === 'darwin') {
-      return join(getResourcesPath(), 'bin', `darwin-${arch}`);
-    }
-    return join(getResourcesPath(), 'bin');
-  }
   return join(getResourcesPath(), 'bin', `${platform}-${arch}`);
 }
 

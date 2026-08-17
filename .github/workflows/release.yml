@@ -17,6 +17,10 @@ jobs:
             platform: win
             arch: x64
             args: --win --x64
+          - os: windows-latest
+            platform: win
+            arch: arm64
+            args: --win --arm64
           - os: macos-13
             platform: mac
             arch: x64
@@ -25,10 +29,6 @@ jobs:
             platform: mac
             arch: arm64
             args: --mac --arm64
-          - os: macos-14
-            platform: mac
-            arch: universal
-            args: --mac --universal
     steps:
       - name: Checkout (with LFS)
         uses: actions/checkout@v4

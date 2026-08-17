@@ -16,7 +16,7 @@ No API keys. No cloud calls. Your text never leaves your machine.
 
 ## Requirements
 
-- macOS (Apple Silicon or Intel) or Windows x64
+- macOS (Apple Silicon or Intel) or Windows (x64/ARM64)
 - ~1 GB of free RAM for the model at runtime
 - ~500 MB of disk space for the bundled GGUF (downloaded on first run)
 
@@ -24,8 +24,8 @@ No API keys. No cloud calls. Your text never leaves your machine.
 
 Grab the latest installer for your platform from the [Releases](../../releases) page:
 
-- **macOS**: `.dmg` for Apple Silicon, Intel, or a universal build
-- **Windows**: NSIS installer (`.exe`) or portable build
+- **macOS**: `.dmg` for Apple Silicon or Intel
+- **Windows**: NSIS installer (`.exe`) for x64 or ARM64, plus portable builds
 
 On first launch the app downloads the model (~505 MB) and loads it into memory, then you're ready to go.
 
@@ -58,7 +58,7 @@ npx electron-vite build && npx electron-builder --mac --dir   # or --win --x64 -
 
 ### Packaging
 
-- `build:mac` — DMG + ZIP for x64, arm64, and universal
+- `build:mac` — DMG + ZIP for x64 and arm64
 - `build:win` — NSIS installer + portable `.exe`
 - Binaries for both platforms are bundled in `resources/bin/`; each package ships only the binaries for its platform(s)
 
