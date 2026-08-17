@@ -10,9 +10,11 @@ export function createTray(showWindow: (tab?: string) => void): void {
   showMainWindowCallback = showWindow;
   
   const isWindows = process.platform === 'win32';
-  const iconPath = join(__dirname, '../../resources/icon.png');
+  const iconPath = app.isPackaged
+    ? join(process.resourcesPath, 'resources', 'icon.png')
+    : join(__dirname, '../../resources/icon.png');
   let icon = nativeImage.createFromPath(iconPath);
-  
+
   if (icon.isEmpty()) {
     console.warn('Tray icon not found, using default');
     // Create a 16x16 transparent icon as fallback
@@ -100,7 +102,9 @@ export function updateTrayIcon(): void {
   if (!tray) return;
   
   const isWindows = process.platform === 'win32';
-  const iconPath = join(__dirname, '../../resources/icon.png');
+  const iconPath = app.isPackaged
+    ? join(process.resourcesPath, 'resources', 'icon.png')
+    : join(__dirname, '../../resources/icon.png');
   let icon = nativeImage.createFromPath(iconPath);
   
   if (!icon.isEmpty()) {

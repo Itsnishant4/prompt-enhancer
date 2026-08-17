@@ -147,7 +147,9 @@ async function initializeApp(): Promise<void> {
   await app.whenReady();
 
   if (process.platform === 'darwin') {
-    const iconPath = join(__dirname, '../../resources/icon.png');
+    const iconPath = app.isPackaged
+      ? join(process.resourcesPath, 'resources', 'icon.png')
+      : join(__dirname, '../../resources/icon.png');
     const image = nativeImage.createFromPath(iconPath);
     if (!image.isEmpty()) {
       app.dock.setIcon(image);
