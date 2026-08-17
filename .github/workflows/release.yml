@@ -1,0 +1,87 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build (${{ matrix.platform }} / ${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: win
+            arch: x64
+            args: --win --x64
+          - os: macos-13
+            platform: mac
+            arch: x64
+            args: --mac --x64
+          - os: macos-14
+            platform: mac
+            arch: arm64
+            args: --mac --arm64
+          - os: macos-14
+            platform: mac
+            arch: universal
+            args: --mac --universal
+    steps:
+      - name: Checkout (with LFS)
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build (electron-vite)
+        run: npx electron-vite build
+
+      - name: Package
+        run: npx electron-builder ${{ matrix.args }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}-${{ matrix.arch }}
+          path: release/**
+          if-no-files-found: error
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+          merge-multiple: true
+
+      - name: List artifacts
+        run: ls -lhR release-artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-artifacts/**
+          generate_release_notes: true
+          draft: false
+          prerelease: false
