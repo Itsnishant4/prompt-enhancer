@@ -21,6 +21,8 @@ const ALLOWED_INVOKE_CHANNELS = [
   'app:open-external',
   'app:get-version',
   'app:get-platform',
+  'system:check-accessibility',
+  'system:request-accessibility',
   'dialog:show-message',
   'window:is-maximized',
 ] as const;
@@ -84,6 +86,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     openExternal: (url: string) => ipcRenderer.invoke('app:open-external', url),
     getVersion: () => ipcRenderer.invoke('app:get-version') as Promise<string>,
     getPlatform: () => ipcRenderer.invoke('app:get-platform') as Promise<string>,
+  },
+  system: {
+    checkAccessibility: () => ipcRenderer.invoke('system:check-accessibility') as Promise<boolean>,
+    requestAccessibility: () => ipcRenderer.invoke('system:request-accessibility') as Promise<boolean>,
   },
   dialog: {
     showMessage: (options: { type: 'info' | 'warning' | 'error'; title: string; message: string; detail?: string }) =>
@@ -153,6 +159,10 @@ declare global {
         openExternal: (url: string) => Promise<void>;
         getVersion: () => Promise<string>;
         getPlatform: () => Promise<string>;
+      };
+      system: {
+        checkAccessibility: () => Promise<boolean>;
+        requestAccessibility: () => Promise<boolean>;
       };
       dialog: {
         showMessage: (options: { type: 'info' | 'warning' | 'error'; title: string; message: string; detail?: string }) => Promise<Electron.MessageBoxReturnValue>;

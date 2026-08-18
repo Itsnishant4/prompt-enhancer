@@ -1,6 +1,6 @@
 {
   "name": "prompt-enhancer",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Local-first AI prompt enhancer. Select any text, press a shortcut, and get a clearer, more effective prompt back — powered by a bundled llama.cpp server running MiniCPM-V offline.",
   "author": "Nishant Patel",
   "license": "MIT",

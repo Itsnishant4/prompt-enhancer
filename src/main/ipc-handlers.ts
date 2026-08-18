@@ -1,4 +1,4 @@
-import { ipcMain, shell, app } from 'electron';
+import { ipcMain, shell, app, systemPreferences } from 'electron';
 import { settingsStore } from './settings-store';
 import { historyStore } from './history-store';
 import { enhanceTextDirect, undoLastEnhancement, clearSuccessTimeout } from './text-automation';
@@ -166,5 +166,15 @@ export function registerIpcHandlers(): void {
 
   ipcMain.handle('app:get-platform', (): string => {
     return process.platform;
+  });
+
+  ipcMain.handle('system:check-accessibility', (): boolean => {
+    if (process.platform !== 'darwin') return true;
+    return systemPreferences.isTrustedAccessibilityClient(false);
+  });
+
+  ipcMain.handle('system:request-accessibility', (): boolean => {
+    if (process.platform !== 'darwin') return true;
+    return systemPreferences.isTrustedAccessibilityClient(true);
   });
 }

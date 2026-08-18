@@ -4,6 +4,7 @@ import { SettingsPanel } from './components/SettingsPanel';
 import { HistoryPanel } from './components/HistoryPanel';
 import { ProductivityDashboard } from './components/ProductivityDashboard';
 import { DownloadGate } from './components/DownloadGate';
+import { AccessibilityGate } from './components/AccessibilityGate';
 import { ToastContainer, useToast } from './components/Toast';
 import { windowControls } from './hooks/useWindowControls';
 import { clsx } from 'clsx';
@@ -17,6 +18,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [isMaximized, setIsMaximized] = useState(false);
   const [platform, setPlatform] = useState<string>('');
+  const [accessibilityGranted, setAccessibilityGranted] = useState<boolean | null>(null);
   const [modelReady, setModelReady] = useState<boolean | null>(null);
   const { toasts, dismiss } = useToast();
   const { minimize, maximize, close, checkMaximized } = windowControls();
@@ -25,6 +27,7 @@ export default function App() {
 
   useEffect(() => {
     window.electronAPI.app.getPlatform().then(setPlatform);
+    window.electronAPI.system.checkAccessibility().then(setAccessibilityGranted);
   }, []);
 
   // Check if the llama.cpp model is downloaded before allowing app use
@@ -51,11 +54,15 @@ export default function App() {
     setIsMaximized(max);
   }, [maximize, checkMaximized]);
 
+  if (accessibilityGranted === false) {
+    return <AccessibilityGate onGranted={() => setAccessibilityGranted(true)} />;
+  }
+
   if (modelReady === false) {
     return <DownloadGate onComplete={() => setModelReady(true)} />;
   }
 
-  if (modelReady === null) {
+  if (modelReady === null || accessibilityGranted === null) {
     return (
       <div className="h-screen bg-white dark:bg-[#0a0a0f] flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-slate-200 dark:border-slate-800 border-t-indigo-500 rounded-full animate-spin" />
