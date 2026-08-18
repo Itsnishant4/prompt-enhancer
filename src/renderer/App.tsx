@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Settings, History, ChevronLeft, Minimize, Maximize, X } from 'lucide-react';
+import { Settings, History, ChevronLeft, Minimize, Maximize, X, BarChart3 } from 'lucide-react';
 import { SettingsPanel } from './components/SettingsPanel';
 import { HistoryPanel } from './components/HistoryPanel';
+import { ProductivityDashboard } from './components/ProductivityDashboard';
 import { DownloadGate } from './components/DownloadGate';
 import { ToastContainer, useToast } from './components/Toast';
 import { windowControls } from './hooks/useWindowControls';
@@ -10,10 +11,10 @@ import { clsx } from 'clsx';
 import { useSettings } from './hooks/useSettings';
 import { DEFAULT_SETTINGS } from '@shared/constants';
 
-type Tab = 'settings' | 'history';
+type Tab = 'settings' | 'history' | 'dashboard';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('settings');
+  const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [isMaximized, setIsMaximized] = useState(false);
   const [platform, setPlatform] = useState<string>('');
   const [modelReady, setModelReady] = useState<boolean | null>(null);
@@ -82,7 +83,7 @@ export default function App() {
           >
             <SettingsPanel platform={platform} />
           </div>
-        ) : (
+        ) : activeTab === 'history' ? (
           <div
             key="history"
             className="absolute inset-0 overflow-y-auto"
@@ -90,6 +91,13 @@ export default function App() {
             <div className="max-w-2xl mx-auto p-8 pb-16">
               <HistoryPanel />
             </div>
+          </div>
+        ) : (
+          <div
+            key="dashboard"
+            className="absolute inset-0 overflow-y-auto overflow-x-hidden pt-8 px-8 custom-scrollbar pb-24"
+          >
+            <ProductivityDashboard />
           </div>
         )}
       </main>
@@ -139,6 +147,18 @@ function TitleBar({
       {/* Centered Tabs */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="flex items-center p-1 bg-slate-100/50 dark:bg-slate-900/50 rounded-full border border-slate-200/50 dark:border-slate-800/50 pointer-events-auto" style={noDragStyle}>
+            <button
+              onClick={() => onTabChange('dashboard')}
+              className={clsx(
+                "px-4 py-1.5 rounded-full text-[11px] uppercase tracking-wider font-bold transition-all duration-200 flex items-center gap-1.5",
+                activeTab === 'dashboard'
+                  ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+              )}
+            >
+              <BarChart3 size={13} />
+              Stats
+            </button>
             <button
               onClick={() => onTabChange('settings')}
               className={clsx(

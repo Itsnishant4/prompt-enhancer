@@ -1,4 +1,4 @@
-import { Tray, Menu, nativeImage, app, nativeTheme } from 'electron';
+import { Tray, Menu, nativeImage, app } from 'electron';
 import { join } from 'path';
 import { settingsStore } from './settings-store';
 import { enhanceText } from './text-automation';

@@ -158,8 +158,6 @@ export function SettingsPanel({ platform }: { platform?: string }) {
         </div>
       </section>
 
-
-
       {/* System Prompt */}
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-slate-200/50 dark:border-slate-800/50 pb-2">
@@ -168,7 +166,7 @@ export function SettingsPanel({ platform }: { platform?: string }) {
         <textarea
           value={formData.systemPrompt || ''}
           onChange={(e) => handleChange('systemPrompt', e.target.value)}
-          className="textarea-field-minimal  text-xs leading-relaxed min-h-[120px]"
+          className="textarea-field-minimal text-xs leading-relaxed min-h-[120px]"
           placeholder="Enter system prompt..."
         />
       </section>
@@ -187,7 +185,7 @@ export function SettingsPanel({ platform }: { platform?: string }) {
               type="text"
               value={formData.shortcut || ''}
               onChange={(e) => handleChange('shortcut', e.target.value)}
-              className="input-field-minimal  text-center max-w-[200px]"
+              className="input-field-minimal text-center max-w-[200px]"
               placeholder={isMac ? 'CmdOrCtrl+E' : 'CommandOrControl+E'}
             />
           </div>

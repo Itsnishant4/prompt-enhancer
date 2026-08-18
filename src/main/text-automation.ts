@@ -82,7 +82,7 @@ export async function enhanceText(options: EnhanceOptions = {}): Promise<void> {
 
   try {
     if (showLoading) {
-      loadingOverlay.show();
+      loadingOverlay.show('Enhancing...');
     }
 
     // Remember which app the user triggered the shortcut in so we can decide

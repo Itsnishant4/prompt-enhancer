@@ -31,7 +31,7 @@ export const IPC_CHANNELS = {
 export const DEFAULT_SETTINGS: Settings = {
   useLocalModel: true,
   localModelName: 'MiniCPM-V-4.6',
-  systemPrompt: 'You are a prompt enhancer. Rewrite the user\'s prompt to make it clearer, more specific, structured, and effective for an AI model. Preserve the user\'s original intent, requirements, constraints, and tone. Fix ambiguity, add useful missing context when logically implied, remove unnecessary wording, and organize instructions in a logical order. Do not change the requested task or invent requirements. Output only the enhanced prompt.',
+  systemPrompt: `You are a prompt enhancer. Rewrite the user's prompt to make it clearer, more specific, structured, and effective for an AI model. Preserve the user's original intent, requirements, constraints, and tone. Fix ambiguity, add useful missing context when logically implied, remove unnecessary wording, and organize instructions in a logical order. Do not change the requested task or invent requirements. Output only the enhanced prompt.`,
   shortcut: 'CommandOrControl+E',
   launchAtLogin: false,
   showLoadingOverlay: true,

@@ -9,7 +9,7 @@ export function registerGlobalShortcut(): void {
   registerShortcut(shortcut);
 
   settingsStore.onChange(() => {
-    const newShortcut = settingsStore.get('shortcut');
+    const newShortcut = settingsStore.get('shortcut') || 'CommandOrControl+E';
     if (newShortcut !== registeredShortcut) {
       registerShortcut(newShortcut);
     }
@@ -18,10 +18,15 @@ export function registerGlobalShortcut(): void {
 
 function registerShortcut(shortcut: string): void {
   if (registeredShortcut) {
-    globalShortcut.unregister(registeredShortcut);
+    try {
+      globalShortcut.unregister(registeredShortcut);
+    } catch (err) {
+      console.error(`Failed to unregister shortcut ${registeredShortcut}:`, err);
+    }
+    registeredShortcut = null;
   }
 
-  const ret = globalShortcut.register(shortcut, async () => {
+  const success = globalShortcut.register(shortcut, async () => {
     if (!app.isReady()) return;
     try {
       await enhanceText({ showLoading: settingsStore.get('showLoadingOverlay') });
@@ -30,7 +35,7 @@ function registerShortcut(shortcut: string): void {
     }
   });
 
-  if (!ret) {
+  if (!success) {
     console.error(`Failed to register global shortcut: ${shortcut}`);
   } else {
     registeredShortcut = shortcut;
@@ -40,7 +45,11 @@ function registerShortcut(shortcut: string): void {
 
 export function unregisterGlobalShortcut(): void {
   if (registeredShortcut) {
-    globalShortcut.unregister(registeredShortcut);
+    try {
+      globalShortcut.unregister(registeredShortcut);
+    } catch (err) {
+      console.error(`Failed to unregister shortcut ${registeredShortcut}:`, err);
+    }
     registeredShortcut = null;
   }
 }

@@ -69,11 +69,18 @@ const INLINE_HTML = `<!DOCTYPE html>
 const DATA_URL = `data:text/html;charset=utf-8,${encodeURIComponent(INLINE_HTML)}`;
 
 export const loadingOverlay = {
-  show(): void {
-    if (loadingWindow && !loadingWindow.isDestroyed()) return;
+  show(labelText = 'Enhancing...'): void {
+    if (loadingWindow && !loadingWindow.isDestroyed()) {
+      const code = `
+        const label = document.getElementById('label');
+        if (label) label.textContent = ${JSON.stringify(labelText)};
+      `;
+      loadingWindow.webContents.executeJavaScript(code).catch(() => {});
+      return;
+    }
 
     const { width: workWidth, height: workHeight, y: workY } = screen.getPrimaryDisplay().workArea;
-    const winWidth = 240;
+    const winWidth = 260;
     const winHeight = 64;
 
     loadingWindow = new BrowserWindow({
@@ -106,6 +113,13 @@ export const loadingOverlay = {
 
     loadingWindow.once('ready-to-show', () => {
       loadingWindow?.showInactive();
+      if (labelText !== 'Enhancing...') {
+        const code = `
+          const label = document.getElementById('label');
+          if (label) label.textContent = ${JSON.stringify(labelText)};
+        `;
+        loadingWindow?.webContents.executeJavaScript(code).catch(() => {});
+      }
     });
 
     loadingWindow.on('closed', () => {

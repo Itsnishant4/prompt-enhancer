@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "savedAt": "2026-08-18T07:24:34.820Z",
+  "agents": [],
+  "archived": [
+    {
+      "id": "jim-msy36w8u",
+      "name": "Jim",
+      "character": "jim",
+      "accent": "sky",
+      "description": "on standby",
+      "project": "prompt-enhancer",
+      "tmuxTarget": "",
+      "cwd": "/Users/nishantpatel/Desktop/prt/prompt-enhancer",
+      "goal": "Build responsive, user-friendly, and high-performance web applications.\nImprove expertise in React, Next.js, JavaScript, TypeScript, and modern UI frameworks.\nWrite clean, reusable, maintainable code while following best development practices.\nContinuously learn new technologies and contribute effectively to real-world projects.",
+      "status": "idle",
+      "action": "archived",
+      "progress": 0,
+      "command": "claude --model auto/claude-opus --permission-mode bypassPermissions",
+      "provider": "claude",
+      "model": "claude-fable-5",
+      "archived": true
+    }
+  ],
+  "restorable": [
+    {
+      "id": "pam-msy4m1hs",
+      "name": "Pam",
+      "character": "pam",
+      "accent": "sky",
+      "description": "on standby",
+      "project": "prompt-enhancer",
+      "tmuxTarget": "",
+      "cwd": "/Users/nishantpatel/Desktop/prt/prompt-enhancer",
+      "goal": "Research the questions you are given across multiple sources, verify the key claims, and return a concise, cited summary.",
+      "status": "idle",
+      "action": "reconnecting…",
+      "progress": 0,
+      "ptyId": "pty-pam-msy4m1hs",
+      "command": "opencode",
+      "provider": "opencode",
+      "archived": false
+    },
+    {
+      "id": "jim-msy7dvoo",
+      "name": "Jim",
+      "character": "jim",
+      "accent": "sky",
+      "description": "on standby",
+      "project": "prompt-enhancer",
+      "tmuxTarget": "",
+      "cwd": "/Users/nishantpatel/Desktop/prt/prompt-enhancer",
+      "goal": "Develop scalable, reliable, and high-performance software solutions.\nStrengthen skills in software development, system design, APIs, databases, and modern technologies.\nWrite clean, maintainable, and secure code while following industry best practices.\nContinuously learn new technologies and contribute effectively to real-world projects.",
+      "status": "idle",
+      "action": "reconnecting…",
+      "progress": 0,
+      "ptyId": "pty-jim-msy7dvoo",
+      "command": "opencode",
+      "provider": "opencode",
+      "archived": false
+    }
+  ],
+  "queues": {},
+  "selectedId": null
+}

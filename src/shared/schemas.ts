@@ -1,20 +1,17 @@
 import { z } from 'zod';
 import type { Settings, EnhanceRequest, HistoryEntry } from './types';
+import { DEFAULT_SETTINGS } from './constants';
 
 export type { Settings, EnhanceRequest, HistoryEntry };
 
 export const SettingsSchema = z.object({
   useLocalModel: z.boolean().default(true),
-  localModelName: z.string().default('Llama-3.2-1B-Instruct-q4f32_1-MLC'),
-  nvidiaApiKey: z.string().default(''),
-  nvidiaBaseUrl: z.string().url().default('https://integrate.api.nvidia.com/v1'),
-  geminiApiKey: z.string().default(''),
-  geminiBaseUrl: z.string().url().default('https://generativelanguage.googleapis.com/v1beta/openai'),
+  localModelName: z.string().default('MiniCPM-V-4.6'),
   systemPrompt: z.string().min(10).max(5000).default(
-    'You are an expert prompt engineer. Enhance the following prompt to be more detailed, specific, and effective while preserving the original intent. Return only the enhanced prompt without any explanations or formatting.'
+    DEFAULT_SETTINGS.systemPrompt
   ),
   shortcut: z.string().default('CommandOrControl+E'),
-  launchAtLogin: z.boolean().default(true),
+  launchAtLogin: z.boolean().default(false),
   showLoadingOverlay: z.boolean().default(true),
 });
 
